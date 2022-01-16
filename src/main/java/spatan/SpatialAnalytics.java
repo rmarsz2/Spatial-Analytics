@@ -24,9 +24,14 @@ public class SpatialAnalytics implements PlugIn {
 	public void run(String arg) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				SwingPanel sp = new SwingPanel();
-				UIManager.put("swing.boldMetal", Boolean.FALSE); 
-				SwingPanel.createAndShowGUI();
+				try {
+					SwingPanel sp = new SwingPanel();
+					sp.setVisible(true);
+					UIManager.put("swing.boldMetal", Boolean.FALSE); 
+					SwingPanel.createAndShowGUI();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
         });
 	}
