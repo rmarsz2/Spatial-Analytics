@@ -64,14 +64,14 @@
 	</mailingLists>
 
 	<scm>
-		<connection>scm:git:https://github.com/rmarsz2/testing</connection>
-		<developerConnection>scm:git:git@github.com:rmarsz2/testing</developerConnection>
+		<connection>scm:git:https://github.com/rmarsz2/Spatial-Analytics</connection>
+		<developerConnection>scm:git:git@github.com:rmarsz2/Spatial-Analytics</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://github.com/rmarsz2/testing</url>
+		<url>https://github.com/rmarsz2/Spatial-Analytics</url>
 	</scm>
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/rmarsz2/testing/issues</url>
+		<url>https://github.com/rmarsz2/Spatial-Analytics/issues</url>
 	</issueManagement>
 	<ciManagement>
 		<system>None</system>
