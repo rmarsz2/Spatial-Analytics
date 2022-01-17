@@ -4,8 +4,8 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.SwingUtilities;
-import javax.swing.filechooser.*;
+import ij.measure.ResultsTable;
+
 
 public class SwingPanel extends JPanel implements ActionListener {
 	   // initializing using constructor  
@@ -19,14 +19,42 @@ public class SwingPanel extends JPanel implements ActionListener {
         log = new JTextArea(5,20);
         log.setMargin(new Insets(5,5,5,5));
         log.setEditable(false);
-        JScrollPane logScrollPane = new JScrollPane(log);
         
-        //File Diaolog
+        String[] columnNames = {"First Name", "Last Name", "Sport", "# of Years", "Vegetarian"};
+        
+        Object[][] data = {
+                {"Kathy", "Smith",
+                 "Snowboarding", new Integer(5), new Boolean(false)},
+                {"John", "Doe",
+                 "Rowing", new Integer(3), new Boolean(true)},
+                {"Sue", "Black",
+                 "Knitting", new Integer(2), new Boolean(false)},
+                {"Jane", "White",
+                 "Speed reading", new Integer(20), new Boolean(true)},
+                {"Joe", "Brown",
+                 "Pool", new Integer(10), new Boolean(false)}
+                };
+        
+        JTable table = new JTable(data, columnNames);
+        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+        table.setFillsViewportHeight(true);
+ 
+        JScrollPane logScrollPane = new JScrollPane(log);
+        JScrollPane tableScrollPane = new JScrollPane(table);
+
+        ResultsTable rt = ResultsTable.getResultsTable();
+        int count = rt.getCounter();
+        
+        log.append("Results Table Counter: " + count + "." + newline);
+        
+        if (count == 0)
+        {
+            log.append("Checking any other tables available." + newline);
+        }
+
         fc = new JFileChooser();
-      //Create the open button.  We use the image from the JLF
-        //Graphics Repository (but we extracted it from the jar).
-        openButton = new JButton("Open a File...",
-                                 createImageIcon("images/Open16.gif"));
+        //JLF Graphics Repository extracted from jar).
+        openButton = new JButton("Open a File...", createImageIcon("images/Open16.gif"));
         openButton.addActionListener(this);
 
         //Create the save button.  We use the image from the JLF
@@ -43,6 +71,7 @@ public class SwingPanel extends JPanel implements ActionListener {
         //Add the buttons and the log to this panel.
         add(buttonPanel, BorderLayout.PAGE_START);
         add(logScrollPane, BorderLayout.CENTER);
+        add(tableScrollPane);
 	}    
 	
 	public void actionPerformed(ActionEvent e) {
