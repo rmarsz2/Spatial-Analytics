@@ -25,10 +25,10 @@ public class SpatialAnalytics implements PlugIn {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SwingPanel sp = new SwingPanel();
-					sp.setVisible(true);
+					MainGUI gui = new MainGUI("Spatial Analytics");
+					gui.setVisible(true);
 					UIManager.put("swing.boldMetal", Boolean.FALSE); 
-					SwingPanel.createAndShowGUI();
+					//MainGUI.createAndShowGUI();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

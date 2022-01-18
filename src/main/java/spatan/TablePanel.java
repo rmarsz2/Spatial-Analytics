@@ -4,21 +4,18 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 import ij.measure.ResultsTable;
+import ij.IJ;
 
-
-public class SwingPanel extends JPanel implements ActionListener {
+public class TablePanel extends JPanel implements ActionListener {
 	   // initializing using constructor  
 	static private final String newline = "\n";
     JButton openButton, saveButton;
-    JTextArea log;
     JFileChooser fc;
     
-	public SwingPanel() {  
-		super(new BorderLayout());
-        log = new JTextArea(5,20);
-        log.setMargin(new Insets(5,5,5,5));
-        log.setEditable(false);
+	public TablePanel() {  
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         
         String[] columnNames = {"First Name", "Last Name", "Sport", "# of Years", "Vegetarian"};
         
@@ -38,18 +35,17 @@ public class SwingPanel extends JPanel implements ActionListener {
         JTable table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);
- 
-        JScrollPane logScrollPane = new JScrollPane(log);
+
         JScrollPane tableScrollPane = new JScrollPane(table);
 
         ResultsTable rt = ResultsTable.getResultsTable();
         int count = rt.getCounter();
         
-        log.append("Results Table Counter: " + count + "." + newline);
+        IJ.log("Results Table Counter: " + count + ".");
         
         if (count == 0)
         {
-            log.append("Checking any other tables available." + newline);
+        	IJ.log("Checking any other tables available.");
         }
 
         fc = new JFileChooser();
@@ -69,8 +65,7 @@ public class SwingPanel extends JPanel implements ActionListener {
         buttonPanel.add(saveButton);
 
         //Add the buttons and the log to this panel.
-        add(buttonPanel, BorderLayout.PAGE_START);
-        add(logScrollPane, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.LINE_START);
         add(tableScrollPane);
 	}    
 	
@@ -78,38 +73,36 @@ public class SwingPanel extends JPanel implements ActionListener {
 
         //Handle open button action.
         if (e.getSource() == openButton) {
-            int returnVal = fc.showOpenDialog(SwingPanel.this);
+            int returnVal = fc.showOpenDialog(TablePanel.this);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 //This is where a real application would open the file.
-                log.append("Opening: " + file.getName() + "." + newline);
+                IJ.log("Opening: " + file.getName() + "." + newline);
             } else {
-                log.append("Open command cancelled by user." + newline);
+            	IJ.log("Open command cancelled by user." + newline);
             }
-            log.setCaretPosition(log.getDocument().getLength());
 
         //Handle save button action.
         } else if (e.getSource() == saveButton) {
-            int returnVal = fc.showSaveDialog(SwingPanel.this);
+            int returnVal = fc.showSaveDialog(TablePanel.this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 //This is where a real application would save the file.
-                log.append("Saving: " + file.getName() + "." + newline);
+                IJ.log("Saving: " + file.getName() + "." + newline);
             } else {
-                log.append("Save command cancelled by user." + newline);
+            	IJ.log("Save command cancelled by user." + newline);
             }
-            log.setCaretPosition(log.getDocument().getLength());
         }
     }
 
     /** Returns an ImageIcon, or null if the path was invalid. */
     protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = SwingPanel.class.getResource(path);
+        java.net.URL imgURL = TablePanel.class.getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            System.err.println("Couldn't find file: " + path);
+            IJ.log("Couldn't find file: " + path);
             return null;
         }
     }
@@ -126,7 +119,7 @@ public class SwingPanel extends JPanel implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Add content to the window.
-        frame.add(new SwingPanel());
+        frame.add(new TablePanel());
 
         //Display the window.
         frame.pack();
