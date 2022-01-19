@@ -101,5 +101,20 @@
 			<groupId>net.imagej</groupId>
 			<artifactId>imagej</artifactId>
 		</dependency>
+		<dependency>
+  	  <groupId>tech.tablesaw</groupId>
+  	  <artifactId>tablesaw-core</artifactId>
+  	  <version>0.42.0</version>
+		</dependency>
+		<dependency>
+		   <groupId>org.gdal</groupId>
+		   <artifactId>gdal</artifactId>
+		   <version>1.11.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jogamp.jogl/jogl-all-main -->
+		<dependency>
+		   <groupId>org.jogamp.jogl</groupId>
+		   <artifactId>jogl-all-main</artifactId>
+		   </dependency>
 	</dependencies>
 </project>

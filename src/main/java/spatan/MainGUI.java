@@ -14,6 +14,9 @@ public class MainGUI extends JFrame implements ActionListener{
 	JMenuItem fileOpenItem, fileImportItem, fileExportItem, interpItem, pointItem, configureItem;
 	JFileChooser fc;
 	TablePanel sp;
+	CanvasPanel cp;
+	LogPanel lp;
+	OptionsPanel op;
 	
 	public MainGUI () {
 		initComponents();
@@ -41,6 +44,12 @@ public class MainGUI extends JFrame implements ActionListener{
 		c.gridx = 0;
 		c.gridy = 0;
 		pane.add(sp, c);
+
+		cp = new CanvasPanel();
+		c.weightx = 0.5;
+		c.gridx = 1;
+		c.gridy = 0;
+		pane.add(cp, c);
 		
 		//layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 400, Short.MAX_VALUE));
 		//layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 300, Short.MAX_VALUE));
