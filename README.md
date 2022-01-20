@@ -1,1 +1,3 @@
-![alt text](https://github.com/rmarsz2/Spatial-Analytics/scrn.png?raw=true)
+Screenshot of example data using current state of tool.
+
+![plot](/scrn.png)
