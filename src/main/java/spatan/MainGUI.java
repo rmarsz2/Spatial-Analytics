@@ -13,7 +13,7 @@ public class MainGUI extends JFrame implements ActionListener{
 	JMenu fileMenu, mappingMenu;
 	JMenuItem fileOpenItem, fileImportItem, fileExportItem, interpItem, pointItem, configureItem;
 	JFileChooser fc;
-	TablePanel sp;
+	TablePanel tp;
 	CanvasPanel cp;
 	LogPanel lp;
 	OptionsPanel op;
@@ -37,15 +37,15 @@ public class MainGUI extends JFrame implements ActionListener{
 		pane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		sp = new TablePanel();
+		tp = new TablePanel();
 		//this.getContentPane().add(sp);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridx = 0;
 		c.gridy = 0;
-		pane.add(sp, c);
+		pane.add(tp, c);
 
-		cp = new CanvasPanel();
+		cp = new CanvasPanel(tp);
 		c.weightx = 0.5;
 		c.gridx = 1;
 		c.gridy = 0;

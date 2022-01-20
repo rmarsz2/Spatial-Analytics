@@ -4,6 +4,7 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import ij.measure.ResultsTable;
 import ij.IJ;
@@ -18,22 +19,17 @@ public class TablePanel extends JPanel implements ActionListener {
     JTable table;
     JScrollPane tableScrollPane;
     
-	public TablePanel() {  
-        String[] columnNames = {"X", "Y", "Area", "Ratio", "Signal"};
-        Object[][] data = {
-        		{5, 13, 14, 12, 15},
-                {7, 3, 11, 13, 9},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-                };
-        
-        table = new JTable(data, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+	public TablePanel() {
+		DelimitedFile2TableIO tbl = new DelimitedFile2TableIO("C:\\Users\\Dan\\Desktop\\Image 12 cd31.csv");
+		IJ.log("Did my stupid class work?");
+        table = new JTable(tbl.mdlImport);
+        table.setPreferredScrollableViewportSize(new Dimension(500, 500));
         table.setFillsViewportHeight(true);
         tableScrollPane = new JScrollPane(table);
-        
 
+        IJ.log("Column number is " + getColumnIndex(table, "XM"));
+        IJ.log("Column name of index is " + (String)table.getColumnName(getColumnIndex(table, "XM")));
+		
         ResultsTable rt = ResultsTable.getResultsTable();
         int count = rt.getCounter();
         
@@ -44,11 +40,6 @@ public class TablePanel extends JPanel implements ActionListener {
         	IJ.log("Checking any other tables available.");
         }
 
-
-
-        
-
-        IJ.log("Basic Buttons.");
         fc = new JFileChooser();
         openButton = new JButton("Open a File...");
         openButton.addActionListener(this);
@@ -56,11 +47,6 @@ public class TablePanel extends JPanel implements ActionListener {
         saveButton = new JButton("Save a File...");
         saveButton.addActionListener(this);
 
-        //add(openButton);
-        //add(saveButton);
-        //add(tableScrollPane);
-
-        IJ.log("Initialize Random variables.");
         tblLabel = new JLabel("Data Table");
         closeButton = new JButton("Close");
         xLabel = new JLabel("X");
@@ -70,11 +56,9 @@ public class TablePanel extends JPanel implements ActionListener {
         zLabel = new JLabel("Z");
         zTextField = new JTextField("Area");
         
-        IJ.log("Pre layout");
         GroupLayout tPanelLayout = new GroupLayout(this);
         setLayout(tPanelLayout);
 
-        IJ.log("Pre Groups");
         tPanelLayout.setHorizontalGroup(
         		tPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(tableScrollPane)
@@ -179,5 +163,49 @@ public class TablePanel extends JPanel implements ActionListener {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+    }
+    
+    public Object getData(JTable table, int row_index, int col_index){
+    	  return table.getModel().getValueAt(row_index, col_index);
+    }  
+    
+    public int getColumnIndex(JTable table, String colName) {
+        for (int i = 0; i < table.getColumnCount(); i++)
+        {
+        	if (table.getColumnName(i).equals(colName))
+        	{
+        		return i;
+        	}
+        }
+        IJ.log("Could not find column with name " + colName);
+        return -1;
+    }
+
+    public float[] getColumnValues(JTable table, String colName)
+    {
+    	int colInd = getColumnIndex(table, colName);
+    	int numRows = table.getRowCount();
+    	float[] colValues = new float[numRows];
+    	for (int i = 0; i < numRows; i++)
+        {
+    		colValues[i] = (float)Float.parseFloat((String)table.getModel().getValueAt(i, colInd));
+        }
+    	return colValues;
+    }
+    
+    public float getMaxValue(JTable table, String colName)
+    {
+    	int colInd = getColumnIndex(table, colName);
+    	int numRows = table.getRowCount();
+    	float maxVal = 0, nextInt;
+    	for (int i = 0; i < numRows; i++)
+        {
+    		nextInt = (float)Float.parseFloat((String)table.getModel().getValueAt(i, colInd));
+    		if (nextInt > maxVal)
+    		{
+    			maxVal = nextInt;
+    		}
+        }
+    	return maxVal;
     }
 }
